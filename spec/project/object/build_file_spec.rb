@@ -42,8 +42,8 @@ module ProjectSpecs
         @build_file.display_name.should == 'Class.m'
       end
 
-      it 'returns the class name as the display name if no file reference is associated' do
-        @build_file.display_name.should == 'BuildFile'
+      it 'returns (null) as the display name if no file reference is associated' do
+        @build_file.display_name.should == '(null)'
       end
 
       it 'returns the pretty print representation' do

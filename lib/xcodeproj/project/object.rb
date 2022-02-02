@@ -128,6 +128,10 @@ module Xcodeproj
         # @note Not all concrete classes implement the name attribute and this
         #       method prevents from overriding it in plist.
         #
+        #       PBXBuildFiles get their name from the PBXFileReference that
+        #       they wrap. If no such FileReference exists, Xcode's string
+        #       interpellation sets the name to "(null)".
+        #
         # @return [String] a name for the object.
         #
         def display_name
@@ -135,7 +139,12 @@ module Xcodeproj
           if declared_name && !declared_name.empty?
             declared_name
           else
-            isa.gsub(/^(PBX|XC)/, '')
+            case isa
+            when "PBXBuildFile"
+              "(null)"
+            else
+              isa.gsub(/^(PBX|XC)/, '')
+            end
           end
         end
         alias_method :to_s, :display_name
